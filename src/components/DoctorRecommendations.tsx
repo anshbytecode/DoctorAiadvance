@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { MapPin, Star, Phone, Calendar, Award, Clock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { AppointmentBooking } from './AppointmentBooking';
 
 interface DoctorRecommendationsProps {
   analysisResult?: any;
@@ -105,12 +106,6 @@ export const DoctorRecommendations = ({ analysisResult }: DoctorRecommendationsP
     searchDoctors();
   }, [specialty, analysisResult]);
 
-  const bookAppointment = (doctor: any) => {
-    toast({
-      title: "Booking Request Sent",
-      description: `We'll contact you to confirm your appointment with ${doctor.name}`,
-    });
-  };
 
   return (
     <div className="space-y-6">
@@ -240,14 +235,23 @@ export const DoctorRecommendations = ({ analysisResult }: DoctorRecommendationsP
                 </div>
 
                 <div className="flex flex-col space-y-2 lg:ml-6">
-                  <Button 
-                    onClick={() => bookAppointment(doctor)}
-                    disabled={!doctor.acceptingNewPatients}
-                    className="bg-blue-600 hover:bg-blue-700"
-                  >
-                    <Calendar className="mr-2 h-4 w-4" />
-                    Book Appointment
-                  </Button>
+                  <AppointmentBooking 
+                    doctor={{
+                      id: doctor.id,
+                      name: doctor.name,
+                      specialty: doctor.specialty,
+                      phone: doctor.phone
+                    }}
+                    trigger={
+                      <Button 
+                        disabled={!doctor.acceptingNewPatients}
+                        className="bg-blue-600 hover:bg-blue-700"
+                      >
+                        <Calendar className="mr-2 h-4 w-4" />
+                        Book Appointment
+                      </Button>
+                    }
+                  />
                   <Button variant="outline" size="sm">
                     View Profile
                   </Button>
