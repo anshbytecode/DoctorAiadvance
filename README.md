@@ -1,1 +1,1 @@
-.
+https://doctoraiviaaanshul.netlify.app/
